@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>LUNAD</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoiZml0emtlbmpvaG4iLCJhIjoiY2xxcWp2MWw1M3VwYjJtbm05dnc4eHY4MSJ9.kTofeMVuyWEX7X5NFU5kYg';
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+        style: 'mapbox://styles/mapbox/dark-v11', // style URL
+        center: [123.740953,13.154756], // starting position [lng, lat]
+        zoom: 13.5 // starting zoom
+    });
+
+    const geojson = {
+        'type': 'FeatureCollection',
+        'features': [
+            {
+                'type': 'Feature',
+                'properties': {},
+                'geometry': {
+                    'coordinates': [
+                    [123.71686385888893,13.148987346445978],
+                    [123.71677164480013,13.149810478758198],
+                    [123.71274496296473,13.148702991005408],
+                    [123.7116845009561,13.148388703029411],
+                    [123.7118842981464,13.14814924525325],
+                    [123.71209946434954,13.147924753376827],
+                    [123.71511179122058,13.149017278578754],
+                    [123.71692533494803,13.148897550026746],
+                    [123.71959954349387,13.148209109719701],
+                    [123.72115181397373,13.147775092010875],
+                    [123.72276556051088,13.146443101835416],
+                    [123.7275954816842,13.14281818998424],
+                    [123.72889472874755,13.141942232836413],
+                    [123.73069374068956,13.139995674624188],
+                    [123.73219291730823,13.139071054065468],
+                    [123.73284256050943,13.138876396661544],
+                    [123.734141846912,13.138779067902448],
+                    [123.73419181946639,13.138341088005859],
+                    [123.7351912705455,13.138487081391261],
+                    [123.7351912705455,13.139217047016757],
+                    [123.73464157245155,13.139265711315048],
+                    [123.73469154500594,13.146662572375462],
+                    [123.73539116076165,13.146662572375462],
+                    [123.7365905020568,13.146127280704832],
+          [
+            123.74343707238518,
+            13.145981892187322
+          ],
+          [
+            123.74478633134214,
+            13.146127881027041
+          ],
+          [
+            123.7455858922051,
+            13.146371195567141
+          ],
+          [
+            123.7481844650116,
+            13.146711835517962
+          ],
+          [
+            123.74920042017828,
+            13.146576798046041
+          ],
+          [
+            123.7496531668769,
+            13.146080806600281
+          ],
+          [
+            123.75072844028779,
+            13.146246137193259
+          ],
+          [
+            123.75135132293133,
+            13.146314566893949
+          ],
+          [
+            123.75244566421031,
+            13.146669787056396
+          ],
+          [
+            123.75247687455123,
+            13.146395490283425
+          ],
+          [
+            123.75303944294353,
+            13.144824433947093
+          ],
+          [
+            123.75299093344319,
+            13.144294927422536
+          ],
+          [
+            123.7520721431822,
+            13.14297916158148
+          ],
+          [
+            123.75104525994999,
+            13.142110752261416
+          ],
+          [
+            123.74885637726959,
+            13.141400233259063
+          ],
+          [
+            123.745937867029,
+            13.139847610502926
+          ],
+          [
+            123.74469479785279,
+            13.139242348123673
+          ],
+          [
+            123.74064131140881,
+            13.13855813668033
+          ],
+          [
+            123.73653377847853,
+            13.13847918908344
+          ],
+          [
+            123.73515559390324,
+            13.138531821109325
+          ],
+          [
+            123.73507452417522,
+            13.139216032625981
+          ],
+          [
+            123.73404764094306,
+            13.139189716833414
+          ],
+          [
+            123.7339935944567,
+            13.138689716243846
+          ],
+          [
+            123.732669430655,
+            13.13887393784853
+          ],
+          [
+            123.73053459446095,
+            13.140110778627275
+          ],
+          [
+            123.72910236259105,
+            13.141689715246727
+          ],
+          [
+            123.72621087559372,
+            13.143689687046418
+          ],
+          [
+            123.72113051822026,
+            13.147782162694426
+          ],
+          [
+            123.71683382258914,
+            13.149018958569442
+          ]
+                    ],
+                    'type': 'LineString'
+                }
+            }
+        ]
+    };
+
+    map.on('load', () => {
+        map.addSource('line', {
+            type: 'geojson',
+            data: geojson
+        });
+
+        // add a line layer without line-dasharray defined to fill the gaps in the dashed line
+        map.addLayer({
+            type: 'line',
+            source: 'line',
+            id: 'line-background',
+            paint: {
+                'line-color': 'yellow',
+                'line-width': 6,
+                'line-opacity': 0.4
+            }
+        });
+
+        // add a line layer with line-dasharray set to the first value in dashArraySequence
+        map.addLayer({
+            type: 'line',
+            source: 'line',
+            id: 'line-dashed',
+            paint: {
+                'line-color': 'yellow',
+                'line-width': 6,
+                'line-dasharray': [0, 4, 3]
+            }
+        });
+
+        // technique based on https://jsfiddle.net/2mws8y3q/
+        // an array of valid line-dasharray values, specifying the lengths of the alternating dashes and gaps that form the dash pattern
+        const dashArraySequence = [
+            [0, 4, 3],
+            [0.5, 4, 2.5],
+            [1, 4, 2],
+            [1.5, 4, 1.5],
+            [2, 4, 1],
+            [2.5, 4, 0.5],
+            [3, 4, 0],
+            [0, 0.5, 3, 3.5],
+            [0, 1, 3, 3],
+            [0, 1.5, 3, 2.5],
+            [0, 2, 3, 2],
+            [0, 2.5, 3, 1.5],
+            [0, 3, 3, 1],
+            [0, 3.5, 3, 0.5]
+        ];
+
+        let step = 0;
+
+        function animateDashArray(timestamp) {
+            // Update line-dasharray using the next value in dashArraySequence. The
+            // divisor in the expression `timestamp / 50` controls the animation speed.
+            const newStep = parseInt(
+                (timestamp / 50) % dashArraySequence.length
+            );
+
+            if (newStep !== step) {
+                map.setPaintProperty(
+                    'line-dashed',
+                    'line-dasharray',
+                    dashArraySequence[step]
+                );
+                step = newStep;
+            }
+
+            // Request the next frame of the animation.
+            requestAnimationFrame(animateDashArray);
+        }
+
+        // start the animation
+        animateDashArray(0);
+    });
+
+    // Add another line path of Diretso to Legazpi Jeepney Route
+    const origin = [123.7167569574899,13.1497465238183]; // Daraga
+    const destination = [123.71690599186309,13.14893685865053]; // Legazpi City
+
+
+</script>
+
+</body>
+</html>
